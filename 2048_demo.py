@@ -39,8 +39,7 @@ def main():
         # Perform gesture recognition on the image
         result = gesture_recognizer.recognize(mp_image)
 
-        # Sleep to allow making browser window active for pyautogui
-        current_key = None
+
         # Draw the gesture recognition results on the image
         if result.gestures:
             recognized_gesture = result.gestures[0][0].category_name
@@ -48,35 +47,22 @@ def main():
 
          
             if recognized_gesture == "Thumb_Up":
-                    if current_key != "up":
-                        if current_key:
-                            # Release the previous key if it's different
-                            pyautogui.keyUp(current_key) 
-                        # Press the new key and update current_key
-                        pyautogui.keyDown("up")
-                        current_key = "up"
-            elif recognized_gesture == "Thumb_Down":
-                if current_key != "down":
-                    if current_key:
-                        pyautogui.keyUp(current_key) 
-                    pyautogui.keyDown("down")
-                    current_key = "down"
+                # Release the previous key if it's different
+                pyautogui.press("up") 
+                time.sleep(0.75)  # Short delay to ensure the key press is registered
+                        
+            elif recognized_gesture == "Open_Palm":
+                pyautogui.press("down")
+                time.sleep(0.75)  # Short delay to ensure the key press is registered
+
             elif recognized_gesture == "Pointing_Up":
-                if current_key != "left":
-                    if current_key:
-                        pyautogui.keyUp(current_key)
-                    pyautogui.keyDown("left")
-                    current_key = "left"
+                pyautogui.press("left")
+                time.sleep(0.75)  # Short delay to ensure the key press is registered
             elif recognized_gesture == "Victory":
-                if current_key != "right":
-                    if current_key:
-                        pyautogui.keyUp(current_key)
-                    pyautogui.keyDown("right")
-                    current_key = "right"
+                pyautogui.press("right")
+                time.sleep(0.75)  # Short delay to ensure the key press is registered
             elif recognized_gesture == "Closed_Fist":
-                if current_key:
-                    pyautogui.keyUp(current_key)
-                    current_key = None
+                    time.sleep(1.0)  # Short delay to ensure the key press is registered
         
             # Display recognized gesture and confidence 
             cv2.putText(image, f"Gesture: {recognized_gesture} ({confidence:.2f})", 
