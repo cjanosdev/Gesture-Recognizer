@@ -45,24 +45,65 @@ def main():
             recognized_gesture = result.gestures[0][0].category_name
             confidence = result.gestures[0][0].score
 
-         
             if recognized_gesture == "Thumb_Up":
-                # Release the previous key if it's different
-                pyautogui.press("up") 
-                time.sleep(0.75)  # Short delay to ensure the key press is registered
-                        
+                pyautogui.press("up")
+
+                # Short delay to not spam the up gesture too many times
+                # making the game unenjoyable to play
+                time.sleep(0.75)  
+
             elif recognized_gesture == "Open_Palm":
                 pyautogui.press("down")
-                time.sleep(0.75)  # Short delay to ensure the key press is registered
+
+                # Short delay to not spam the down gesture too many times
+                # making the game unenjoyable to play
+                time.sleep(0.75)
 
             elif recognized_gesture == "Pointing_Up":
                 pyautogui.press("left")
-                time.sleep(0.75)  # Short delay to ensure the key press is registered
+
+                # Short delay to not spam the left gesture too many times
+                # making the game unenjoyable to play
+                time.sleep(0.75)
+
             elif recognized_gesture == "Victory":
                 pyautogui.press("right")
-                time.sleep(0.75)  # Short delay to ensure the key press is registered
+
+                # Short delay to not spam the right gesture too many times
+                # making the game unenjoyable to play
+                time.sleep(0.75)
+
             elif recognized_gesture == "Closed_Fist":
-                    time.sleep(1.0)  # Short delay to ensure the key press is registered
+                    # Long delay to just act as a
+                    # an artifical delay between gestures
+                    # to improve user experience
+                    # we found fist was the most natural resting position
+                    time.sleep(1.0)
+
+            elif recognized_gesture == "Thumb_Down":
+                    # These coordinates are based on full screen play on
+                    # my mac m1 pro, you may need to adjust these coordinates based on your screen resolution and where the game is located on your screen
+                    # tried using locateCenterOnScreen to find the buttons but it was too slow, 
+                    # and also not super accurate so hardcoding the coordinates for better performance
+                    # in this case we should demo from my laptop
+
+                    # New game button location from my screen.
+                    new_game_btn = (1091, 175)
+
+                    # Move the mouse to the new game button and click it
+                    pyautogui.moveTo(new_game_btn[0], new_game_btn[1], duration=0.2)
+                    time.sleep(0.2)
+                    pyautogui.click(new_game_btn[0], new_game_btn[1])
+                    time.sleep(0.2)
+
+                    # Start game button location from my screen.
+                    start_game_btn = (758, 590)
+
+                    # Move the mouse to the start game button and click it
+                    pyautogui.moveTo(start_game_btn[0], start_game_btn[1], duration=0.2)
+                    time.sleep(0.2)
+                    pyautogui.click(start_game_btn[0], start_game_btn[1])
+                    time.sleep(0.75)
         
             # Display recognized gesture and confidence 
             cv2.putText(image, f"Gesture: {recognized_gesture} ({confidence:.2f})", 
